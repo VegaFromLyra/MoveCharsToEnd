@@ -17,33 +17,64 @@ namespace MoveCharsToEnd
             char letter = 'a';
 
             MoveLettersToEnd(input, letter);
+
+            Console.WriteLine("Updated character array is");
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                Console.Write(input[i] + " ");
+            }
+
+            Console.WriteLine();
         }
 
         static void MoveLettersToEnd(char[] input, char letter)
         {
-            String inputStr = new String(input);
-            StringBuilder sb = new StringBuilder(inputStr);
+            int length = input.Length;
 
             int count = 0;
 
-            for (int i = 0; i < sb.Length; i++)
+            // First count the number of occurences
+            // of given letter
+            for (int i = 0; i < input.Length; i++)
             {
-                if (sb[i] == letter)
+                if (input[i] == letter)
                 {
                     count++;
-                    sb.Remove(i, 1);
                 }
             }
 
-            string temp = null;
-            for(int i = 0; i < count; i++)
+            // x is a pointer to the 
+            // characters that are not equal to letter
+            int x = 0;
+
+            // y is a pointer to the letter bases chars
+            int y = 0;
+
+            // This moves the non letter values 
+            // towards the left
+            while (x < length - count)
             {
-                temp += letter;
+                if (input[y] != letter)
+                {
+                    input[x] = input[y];
+                    x++;
+                    y++;
+                }
+                else
+                {
+                    while ((y < length) && (input[y] == letter))
+                    {
+                        y++;
+                    }
+                }
             }
 
-            sb.Append(temp);
-
-            Console.WriteLine("Result is {0}", sb.ToString());
+            while (x < length)
+            {
+                input[x] = letter;
+                x++;
+            }
         }
     }
 }
